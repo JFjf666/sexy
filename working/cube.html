@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            background-color: springgreen;
+            perspective: 800px;
+        }
+
+        .box {
+            width: 300px;
+            height: 300px;
+            box-sizing: border-box;
+            position: absolute;
+            border: 1px solid #ccc;
+            top: calc(50% - 150px);
+            left: calc(50% - 150px);
+            transform-style: preserve-3d;
+            transform: rotateX(20deg) rotateY(30deg) rotateZ(50deg);
+        }
+
+        .box div {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            font-size: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 正 */
+        .box div:nth-of-type(1) {
+            background-color: lightyellow;
+            color: #fff;
+            transform: translateZ(150px);
+            opacity: 0.5;
+        }
+
+        /* 反 */
+        .box div:nth-of-type(2) {
+            background-color: lightgreen;
+            color: #000;
+            transform: translateZ(-150px);
+            opacity: 0.5;
+        }
+
+        /* 上 */
+        .box div:nth-of-type(3) {
+            background-color: rgb(25, 193, 186);
+            color: #fff;
+            transform: rotateX(90deg) translateZ(150px);
+            opacity: 0.5;
+        }
+
+        /* 下 */
+        .box div:nth-of-type(4) {
+            background-color: rgb(48, 110, 232);
+            color: #000;
+            transform: rotateX(90deg) translateZ(-150px);
+            opacity: 0.5;
+        }
+
+        /* 左 */
+        .box div:nth-of-type(5) {
+            background-color: rgb(230, 80, 140);
+            color: #000;
+            transform: rotateY(90deg) translateZ(-150px);
+            opacity: 0.5;
+        }
+
+        /* 右 */
+        .box div:nth-of-type(6) {
+            background-color: rgb(155, 55, 160);
+            color: #fff;
+            transform: rotateY(90deg) translateZ(150px);
+            opacity: 0.5;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+        <div>4</div>
+        <div>5</div>
+        <div>6</div>
+    </div>
+</body>
+
+</html>

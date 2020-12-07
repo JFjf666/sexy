@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D导航栏</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul li {
+
+            float: left;
+            width: 100px;
+            height: 30px;
+            line-height: 30px;
+            list-style: none;
+            margin-left: 10px;
+            perspective: 500px;
+            text-align: center;
+
+        }
+
+        .box {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: all .5s;
+
+
+        }
+
+        ul li:hover .box {
+            transform: rotateX(90deg);
+
+
+        }
+
+        .box .front,
+        .bottom {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .front {
+            background-color: rgb(33, 245, 139);
+            transform: translateZ(50%);
+        }
+
+        .bottom {
+            transform: translateY(50%) rotateX(-90deg);
+            background-color: rgb(182, 240, 255);
+
+        }
+    </style>
+</head>
+
+<body>
+    <ul>
+        <li>
+            <div class="box">
+                <div class="front">富强,民主</div>
+                <div class="bottom">文明,和谐</div>
+            </div>
+        </li>
+        <li>
+            <div class="box">
+                <div class="front">自由,平等</div>
+                <div class="bottom">公正,法治</div>
+            </div>
+        </li>
+        <li>
+            <div class="box">
+                <div class="front">爱国,敬业</div>
+                <div class="bottom">诚信,友善</div>
+            </div>
+        </li>
+        <li>
+            <div class="box">
+                <div class="front">廉颇老矣</div>
+                <div class="bottom">尚能饭否</div>
+            </div>
+        </li>
+        <li>
+            <div class="box">
+                <div class="front">大意了</div>
+                <div class="bottom">没有闪</div>
+            </div>
+        </li>
+    </ul>
+</body>
+
+</html>
