@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>煎饼果子</title>
+    <style>
+        canvas {
+            border: 1px solid rgb(228, 14, 14);
+        }
+    </style>
+</head>
+
+<body>
+    <canvas width="600" height="400"></canvas>
+    <script>
+        var SexLine = function (cxt) {
+            this.cxt = cxt || document.querySelector("canvas").getContext('2d');
+
+            this.canvasWidth = this.cxt.canvas.width;
+            this.canvasHeight = this.cxt.canvas.height;
+            //原点
+            this.x0 = this.canvasWidth / 2 + 60;
+            this.y0 = this.canvasHeight / 2;
+            //半径
+            this.radius = 150;
+            //延申出去的长度
+            this.outline = 20;
+            //长方形 的尺寸
+            this.ractW = 20;
+            this.ractH = 10;
+            this.space = 10;
+
+        }
+        //行为和方法
+        SexLine.prototype.init = function (data) {
+            this.drawPie(data);
+        }
+
+        //画圆
+        SexLine.prototype.drawPie = function (data) {
+            var that = this;
+            var beginAngle = 0;
+
+            that.formatDate(data).forEach(function (item, i) {
+                var endAngle = beginAngle + item;
+                that.cxt.beginPath();
+                that.cxt.moveTo(that.x0, that.y0);
+                that.cxt.arc(that.x0, that.y0, that.radius, beginAngle, endAngle);
+                var angleColor = that.cxt.fillStyle = that.randomColor();
+                that.cxt.fill();
+                that.drawTitle(beginAngle, item, angleColor, data[i].title);
+                that.drawRact(i, angleColor, data[i].title);
+                beginAngle = endAngle;
+            })
+        }
+
+        //标题
+        SexLine.prototype.drawTitle = function (beginAngle, angle, color, title) {
+            var edge = this.radius + this.outline;
+            var edgeX = Math.cos(beginAngle + angle / 2) * edge;
+            var edgeY = Math.sin(beginAngle + angle / 2) * edge;
+            this.cxt.beginPath();
+            this.cxt.moveTo(this.x0, this.y0);
+            this.cxt.lineTo(this.x0 + edgeX, this.y0 + edgeY);
+            this.cxt.strokeStyle = color;
+            this.cxt.stroke();
+            this.cxt.beginPath();
+            this.cxt.font = '12px Microsoft YaHei';
+            var strWidth = this.cxt.measureText(title).width;
+            this.cxt.textBaseline = 'bottom';
+            if (this.x0 > this.x0 + edgeX) {
+                this.cxt.moveTo(this.x0 + edgeX, this.y0 + edgeY);
+                this.cxt.lineTo(this.x0 + edgeX - strWidth, this.y0 + edgeY);
+                this.cxt.stroke()
+                this.cxt.fillText(title, this.x0 + edgeX - strWidth, this.y0 + edgeY);
+            } else {
+                this.cxt.moveTo(this.x0 + edgeX, this.y0 + edgeY);
+                this.cxt.lineTo(this.x0 + edgeX + strWidth, this.y0 + edgeY);
+                this.cxt.stroke();
+                this.cxt.fillText(title, this.x0 + edgeX, this.y0 + edgeY);
+            }
+        }
+        //绘制左上角的矩形
+        SexLine.prototype.drawRact = function (index, color, title) {
+            this.cxt.beginPath();
+            this.cxt.fillStyle = color;
+            this.cxt.fillRect(this.space, this.space + index * this.ractH + this.space / 2 * index, this.ractW, this.ractH);
+            this.cxt.beginPath();
+            this.cxt.font = '12px Microsoft YaHei';
+            this.cxt.textBaseline = 'top';
+            this.cxt.fillText(title, this.space * 1.5 + this.ractW, this.space + index * this.ractH + index * this.space / 2);
+        }
+
+
+        //data格式
+        SexLine.prototype.formatDate = function (data) {
+            var dataArr = [];
+            var total = 0;
+            var dataAngle = [];
+            data.forEach(function (item, i) {
+                total += item.num;
+                dataArr.push(item.num);
+            })
+            dataArr.forEach(function (item, i) {
+                dataAngle.push(Math.PI * 2 * (item / total));
+            })
+            return dataAngle;
+        }
+
+        //随机的颜色
+
+        SexLine.prototype.randomColor = function () {
+            var r = Math.floor(Math.random() * 256);
+            var g = Math.floor(Math.random() * 256);
+            var b = Math.floor(Math.random() * 256);
+            return "rgb(" + r + "," + g + "," + b + ")"
+        }
+
+        var data = [
+            { title: '15岁-20岁', num: 10 },
+            { title: '20岁-25岁', num: 60 },
+            { title: '25岁-30岁', num: 20 },
+            { title: '30岁以上', num: 10 }
+        ];
+        var SexLine = new SexLine();
+        SexLine.init(data);
+
+    </script>
+</body>
+
+</html>
